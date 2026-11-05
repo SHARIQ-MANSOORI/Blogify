@@ -1,7 +1,6 @@
 const express = require('express');
-const User = require('../models/user.model');
+const {User,matchPasswordAndGnerateToken} = require('../models/user.model');
 const router = express.Router();
-
 router.get('/signup' , (req,res)=>{
     return res.render("signup")
 })
@@ -29,7 +28,7 @@ router.post('/signin', async(req,res)=>{
    
 
     try {
-     const token = await User.matchPasswordAndGnerateToken(email,password);
+    const token = await matchPasswordAndGnerateToken(email,password);
     console.log("token:",token);
     return res.cookie('token-cookie',token).redirect('/')
         
@@ -42,4 +41,9 @@ router.post('/signin', async(req,res)=>{
 
    
 })
+
+router.get('/signout',(req,res)=>{
+    return res.clearCookie('token-cookie').redirect('/')
+})
+
 module.exports = router;

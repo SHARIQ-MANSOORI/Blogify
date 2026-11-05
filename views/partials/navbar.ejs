@@ -11,23 +11,32 @@
       </div>
       <div class="drawer-body mb-2 md:mb-0">
         <ul class="nav navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+         
+          <% if(locals.user) {%>
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Add Blog</a>
           </li>
-          <li class="nav-item">
+           <li class="nav-item">
             <button class="nav-link" type="button" data-bs-toggle="menu" aria-expanded="false">
               Sharik
             </button>
             <div class="menu">
-              <a class="menu-item" href="#">Action</a>
-              <a class="menu-item" href="#">Another action</a>
-              <hr class="menu-divider">
-              <a class="menu-item" href="#">Something else here</a>
+              <a class="menu-item" href="/user/signout">Logout</a>
             </div>
           </li>
+         <% } else{ %>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/signin">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/signup">Register</a>
+          </li>
+
+          <% } %>
+         
          
         </ul>
        

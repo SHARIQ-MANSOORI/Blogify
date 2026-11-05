@@ -1,10 +1,12 @@
 // dotenv.config()
 const express  = require('express')
 const path = require('path')
+const cookieParser = require('cookie-parser')
 const app = express();
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 8000
 const userRouter = require('./routes/user.route')
+const {checkForAuthenticationCookie} = require('./middlewares/auth')
 
 
 try {
@@ -24,11 +26,15 @@ app.set("views",path.resolve('./views'))
 
 app.use(express.json()) // parse json data coming from frontend
 app.use(express.urlencoded({extended:true})) // parse html form data coming from frontend
+app.use(cookieParser()) // parse cookies coming from frontend
+app.use(checkForAuthenticationCookie('token-cookie')) // check for authentication cookie
 
 app.use('/user',userRouter)
 
 app.get('/',(req,res)=>{
-    res.render("home")
+    res.render("home" , {
+        user:req.user
+    })
 })
 
 
