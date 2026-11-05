@@ -6,6 +6,7 @@ const app = express();
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 8000
 const userRouter = require('./routes/user.route')
+const blogRouter = require('./routes/blog.route')
 const {checkForAuthenticationCookie} = require('./middlewares/auth')
 
 
@@ -30,6 +31,7 @@ app.use(cookieParser()) // parse cookies coming from frontend
 app.use(checkForAuthenticationCookie('token-cookie')) // check for authentication cookie
 
 app.use('/user',userRouter)
+app.use('/blog',blogRouter)
 
 app.get('/',(req,res)=>{
     res.render("home" , {
