@@ -1,15 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <%- include('./partials/head') -%>
-    <title>Document</title>
+    <title>Home | Blogging Website</title>
 </head>
-<body>
+
+<body class="bg-light">
+
     <%- include('./partials/navbar') -%>
-    <h1>home page</h1>
 
+    <div class="container my-5">
 
-   <%- include('./partials/scripts') -%> 
+        <h2 class="fw-bold mb-4 text-center">Latest Blogs</h2>
+
+        <div class="row g-4">
+
+            <% if (blogs && blogs.length > 0) { %>
+
+                <% blogs.forEach((blog) => { %>
+                    <% const coverImageUrl = !blog.coverImgUrl
+                        ? '/images/default-blog.jpg'
+                        : (blog.coverImgUrl.startsWith('/') || /^https?:\/\//i.test(blog.coverImgUrl)
+                            ? blog.coverImgUrl
+                            : '/uploads/' + blog.coverImgUrl); %>
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card h-100 shadow-sm border-0">
+
+                            <!-- Blog Cover Image -->
+                            <img
+                                src="<%= coverImageUrl %>"
+                                class="card-img-top"
+                                alt="Blog Cover"
+                                style="height: 220px; object-fit: cover;"
+                            >
+
+                            <div class="card-body d-flex flex-column">
+
+                                <!-- Blog Title -->
+                                <h5 class="card-title fw-bold">
+                                    <%= blog.title %>
+                                </h5>
+
+                                <!-- Blog Description -->
+                                <p class="card-text text-muted">
+                                    <%= blog.body.length > 120
+                                        ? blog.body.substring(0, 120) + '...'
+                                        : blog.body %>
+                                </p>
+
+                                <!-- Read More Button -->
+                                <a
+                                    href="/blog/<%= blog._id %>"
+                                    class="btn btn-primary mt-auto"
+                                >
+                                    Read More
+                                </a>
+
+                            </div>
+
+                            <!-- Card Footer -->
+                            <div class="card-footer bg-white border-0 text-muted small">
+
+                                <span>
+                                    <%= new Date(blog.createdAt).toLocaleDateString('en-IN') %>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            <% } else { %>
+
+                <div class="col-12 text-center py-5">
+                    <h4 class="text-muted">No blogs available yet.</h4>
+                    <p>Be the first to publish a blog!</p>
+
+                    <a href="/blog/add" class="btn btn-primary">
+                        Create Blog
+                    </a>
+                </div>
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+    <%- include('./partials/scripts') -%>
+
 </body>
 </html>

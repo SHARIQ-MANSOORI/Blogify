@@ -20,7 +20,7 @@
 
                 <div class="card-body p-4">
 
-                    <form action="/blog" method="POST">
+                    <form action="/blog/add" method="POST" enctype="multipart/form-data">
 
                         <!-- Blog Title -->
                         <div class="mb-3">
@@ -61,7 +61,7 @@
                             </label>
 
                             <input
-                                type="url"
+                                type="file"
                                 class="form-control"
                                 id="coverImgUrl"
                                 name="coverImgUrl"
